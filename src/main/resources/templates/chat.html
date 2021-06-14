@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <title>ex4-HeziYovel Login</title>
+</head>
+<body>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <h1 class="display-4">Ex4: chat app</h1>
+        <p class="lead">Hezi Hirshhorn (previously Yovel)</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/readme.html">Readme</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h5 th:text="${'Welcome ' + user}">Welcome</h5>
+    <a href="/api/chat/logout">Logout</a>
+    <div class="row m-0">
+        <button class="btn btn-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#users-container"
+                aria-expanded="false" aria-controls="users-container">
+            <img src="/images/group.png" alt="People icon"/>
+        </button>
+        <div class="col-md-2 collapse bg-info border p-3 d-md-block" id="users-container">
+            <h5>Online:</h5>
+            <ul class="list-group" id="users"></ul>
+        </div>
+        <div id="messages" class="col bg-light p-3 ml-5">
+            <ul class="list-group"></ul>
+            <form>
+                <input class="form-control" type="text" name="text" pattern="(\S+\s*)+" required/>
+                <input type="hidden" name="user" th:value="${user}">
+                <input type="submit" class="btn btn-primary" />
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+<script src="/javascripts/chat.js"></script>
+</body>
+</html>

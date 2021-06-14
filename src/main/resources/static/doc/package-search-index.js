@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.example.ex4"},{"l":"com.example.ex4.entities"},{"l":"com.example.ex4.repositories"}];updateSearchResults();

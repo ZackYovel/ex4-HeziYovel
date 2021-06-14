@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <title>Readme - Hezi Yovel</title>
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="jumbotron bg-primary text-light">
+        <h1>Ex4: Chat-like app</h1>
+        <h3>Hezi Hirshhorn (previously Yovel)</h3>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Readme <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="row mb-3">
+        <div class="col-12 col-lg-4">
+            <ul class="list-group">
+                <li class="list-group-item">Yekhezkel Hirshhorn (previously Yovel)</li>
+                <li class="list-group-item">ID 066733700</li>
+                <li class="list-group-item">yekhezkel.yovel@gmail.com</li>
+            </ul>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <h2>Execution</h2>
+            <p>The submission is an IntelliJ IDEA project that can be run directly from the IDE.</p>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-4">
+            <h2>Assumptions</h2>
+            <p>The site uses bootstap CDN therefore assumes an internet connection is available.</p>
+        </div>
+    </div>
+    <div class="row m-0 mb-3">
+        <div class="col-xl-3 bg-light border">
+            <h2>Documentation</h2>
+            The full documentation is <a href="/doc/index.html">here</a>.
+            <hr/>
+            <h2>Known Issues</h2>
+            <ul>
+                <li>
+                    Static files could not be served by adding them to the webapp folder as usual, so I've added
+                    a servlet mapping in web.xml to map all requests to /static/* to default. This made Tomcat serve
+                    the contents of the /static folder as static files as needed.
+                </li>
+                <li>
+                    For some reason, all unknown requests end up being handled by ServletLanding, which handles the
+                    '/' pattern. This does not happen as a result of a redirect, the browser keeps showing the unknown
+                    pattern while displaying the landing page.
+                    <br>
+                    To solve this I check the requested pattern in doGet of ServletLanding and if it is an unknown
+                    pattern I forward the request to ServletError which serves an error page to the user.
+                </li>
+            </ul>
+            <h3>EDIT:</h3>
+            <strong>
+                Both problems where solved eventually by making ServletLanding handle the "/home" pattern instead of
+                the "/" pattern, and adding a welcome-file-list to web.xml with "home" as one of the welcome files.
+            </strong>
+        </div>
+        <div class="col-xl-6 bg-light border text-break">
+            <h2>Design decisions</h2>
+
+            <ul>
+                <li>
+                    <h6>Database</h6>
+                    <p>
+                        For the database I use an ArrayList of Question objects, such that the question ID is the
+                        index of the question in the ArrayList.
+                    </p>
+                    <p>
+                        A possible issue that may rise is if in the future, deletion of questions will be implemented.
+                        In such a case, if a question is simply removed from the database, all subsequent questions
+                        will have their indexes changed, and this will break the consistency of the question IDs.
+                    </p>
+                    <p>
+                        This can be solved in two ways:
+                    </p>
+                    <ol>
+                        <li>
+                            Changing the data structure without changing the API of DataAccessObject
+                        </li>
+                        <li>
+                            Adding a "deleted" field to the Question object, and implementing deletion by marking this
+                            field as true.
+                        </li>
+                    </ol>
+                    <p>
+                        The advantage of the second option is the server can keep information for internal use even
+                        if the user chooses to delete it and we don't want to display it on the site anymore.
+                        A combination of both options is also possible, of course.
+                    </p>
+                </li>
+            </ul>
+
+            <address>Submitted 24 April 2021</address>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+</body>
+</html>
