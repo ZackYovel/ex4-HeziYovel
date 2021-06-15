@@ -34,13 +34,26 @@ public class Ex4Application {
     /**
      * Registers the un-logged users out for the relevant paths
      *
-     * @return a filter object of type {@link FilterRegistrationBean<LoginFilter>}.
+     * @return a filter object of type {@link FilterRegistrationBean<LoginFilterRedirect>}.
      */
     @Bean
-    public FilterRegistrationBean<LoginFilter> logFilter() {
-        FilterRegistrationBean<LoginFilter> registrationBean = new FilterRegistrationBean<>();
-        registrationBean.setFilter(new LoginFilter(this));
-        registrationBean.addUrlPatterns("/chat","/search", "/api/chat/**", "/api/search/**");
+    public FilterRegistrationBean<LoginFilterRedirect> logFilterRedirect() {
+        FilterRegistrationBean<LoginFilterRedirect> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new LoginFilterRedirect(this));
+        registrationBean.addUrlPatterns("/chat", "/search");
+        return registrationBean;
+    }
+
+    /**
+     * Registers the un-logged users out for the relevant paths
+     *
+     * @return a filter object of type {@link FilterRegistrationBean<LoginFilterRest>}.
+     */
+    @Bean
+    public FilterRegistrationBean<LoginFilterRest> logFilterRest() {
+        FilterRegistrationBean<LoginFilterRest> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new LoginFilterRest(this));
+        registrationBean.addUrlPatterns("/api/chat/*", "/api/search/*");
         return registrationBean;
     }
 

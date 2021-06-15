@@ -231,7 +231,10 @@
      * @returns {*}
      */
     function getJson(response) {
-        if (!response.ok) {
+        let location = response.headers.get("location");
+        if (location) {
+            window.location = `${window.location.origin}${location}`;
+        } else if (!response.ok) {
             throw `connection failed with status ${response.status}`;
         } else {
             return response.json();
@@ -262,11 +265,13 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
+                    redirect: 'follow',
                     body: JSON.stringify({
                         text: utils.getTrimmedValue(textInput),
                         user: utils.getTrimmedValue(domCache.querySelector("#messages input[type='hidden']")),
                     }),
-                }).catch(error => alert(`Error when sending message: ${error}`));
+                }).then(getJson)
+                    .catch(error => alert(`Error when sending message: ${error}`));
                 utils.clearValue(textInput);
             }
         );

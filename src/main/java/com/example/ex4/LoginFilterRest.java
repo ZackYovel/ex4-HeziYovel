@@ -11,19 +11,20 @@ import java.io.IOException;
 /**
  * Filters a request by the user login status (logged in passes through, not logged in filtered out)
  */
-public class LoginFilter extends OncePerRequestFilter {
+public class LoginFilterRest extends OncePerRequestFilter {
 
     /**
      * The {@link Ex4Application}, which knows the last restart time time
      */
     private final Ex4Application ex4Application;
+    public static final String RESPONSE_HEADER_LOCATION = "location";
 
     /**
      * Make a filter with an {@link Ex4Application}
      *
      * @param ex4Application the application
      */
-    public LoginFilter(Ex4Application ex4Application) {
+    public LoginFilterRest(Ex4Application ex4Application) {
         this.ex4Application = ex4Application;
     }
 
@@ -41,7 +42,7 @@ public class LoginFilter extends OncePerRequestFilter {
         Object loginTime = httpServletRequest.getSession().getAttribute(LoginTools.SESSION_ATTR_LOGIN_TIME);
         long refreshTime = ex4Application.getTimeOfLastRefresh();
         if (loginTime == null || (long) loginTime < refreshTime) {
-            httpServletResponse.sendRedirect("/");
+            httpServletResponse.addHeader(RESPONSE_HEADER_LOCATION, "/");
         } else {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
         }
