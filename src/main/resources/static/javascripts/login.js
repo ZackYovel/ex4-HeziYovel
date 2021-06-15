@@ -136,7 +136,7 @@
 
     function handleJson(obj) {
         if (obj.nameIsValid) {
-            window.location = `http://localhost:8080/chat`;
+            window.location = `${window.location.origin}/chat`;
         } else {
             doIfNameNotValid();
         }
